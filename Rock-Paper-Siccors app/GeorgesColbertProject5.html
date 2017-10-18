@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>How am I gonna do this</title>
+    <link type="text/css" rel="stylesheet"  href="GeorgesColbertProject5.css"/>
+    
+</head>
+
+<body>
+<!-- table that contains everythign displayed in the webpage-->
+<table>
+   <tr>
+    <th colspan="7">Rock Paper Scissors</th>
+    
+        
+    </tr> 
+    <tr>
+        <th colspan="1"><img src="rock.jpg" onclick="roulette(0)"></th>
+        <th colspan="3" rowspan="3"><img src="leftPaperHand.jpg" id="player"></th>
+        <th colspan="3" rowspan="3"><img src="rightRockHand.jpg"id="computer"></th>
+       
+    </tr>
+    <tr>
+        <th><img src= "paper.jpg" onclick="roulette(1)"></th>
+        
+    </tr>
+    <tr>
+        <th><img src= "scissors.jpg" onclick="roulette(2)"></th>
+        
+    </tr>
+    <tr>
+        <th colspan="7"> Wins: <span id="win">0</span> Losses: <span id="loss">0</span> Ties: <span id="tie">0</span></th>
+        
+    </tr>
+    <tr>
+        <th colspan="7"> Rounds Played: <span id="rounds">O</span></th>
+    </tr>
+</table>
+<script>
+    var wins = 0;
+        var losses = 0;
+        var ties = 0;
+        var rounding = 0
+        // a game of chance, function compares player vs. computer
+    function roulette(fandom) {
+        //code
+        rounding++;
+        rounds.innerHTML= rounding;
+        switch (fandom) {
+            //case
+            case 0:
+            player.src="leftRockHand.jpg";
+            break;
+        case 1:
+            player.src="leftPaperHand.jpg";
+            break;
+        default:
+            player.src="leftScissorHand.jpg";
+            
+                
+        }
+        var activeMole= Math.floor(Math.random()*3);
+        
+        switch (activeMole) {
+            //case
+            case 0:
+            computer.src="rightRockHand.jpg";
+            break;
+        case 1:
+            computer.src="rightPaperHand.jpg";
+            break;
+        default:
+            computer.src="rightScissorHand.jpg";
+            
+        }
+        if (fandom  == activeMole) {
+            //code
+           
+            ties++;
+            tie.innerHTML = ties;
+             alert("Tie!");
+        }
+        else if (fandom==0 && activeMole==2) {
+            //code
+            
+            wins++;
+            win.innerHTML = wins;
+            alert("rock win!");
+        }
+        else if (fandom == 0 && activeMole==1) {
+            //code
+            losses++;
+            loss.inerHTML= losses;
+            alert("paper beats rock :( ");
+        }
+        else if (fandom==2 && activeMole==0) {
+            //code
+            losses++,
+            loss.inerHTML= losses;
+            alert("rock beats scissors :( ");
+        }
+        else  if (fandom>0 && activeMole>fandom) {
+            //code
+            
+            losses++;
+            loss.innerHTML = losses;
+            alert("computer wins!");
+        }
+        
+        else {
+           
+            wins++;
+            win.innerHTML = wins;
+             alert("you win!");
+            
+        }
+    }
+    
+    
+</script>
+</body>
+</html>

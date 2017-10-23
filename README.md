@@ -1,2 +1,2 @@
 # Front-End-Development-
-This repository is to highlight my past experience with HMTL+CSS and Javascript.
+This repository is to highlight my experience with Front-End Development.

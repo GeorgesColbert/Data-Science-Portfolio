@@ -1,4 +1,4 @@
--- Note: You need to replace the s3 directory to your own 
+
 
 data = LOAD 's3://budt758b-colbert/loudacre/ad_data1.txt' AS (keyword:chararray, 
                campaign_id:chararray,

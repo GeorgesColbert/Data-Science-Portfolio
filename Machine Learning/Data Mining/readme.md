@@ -1,6 +1,6 @@
 Data Wrangling
 
-the data set is a compiled record of all accidents that happened in London between 2005 and 2014.
+the data set is a compiled record of all accidents that happened in London between 2005 and 2014. Due to the size of the data (516 MB in total), the data set could not be uploaded to Github. The data can be downloaded from (https://data.gov.uk/dataset/road-accidents-safety-data), under "2014 All STATS19 data (accident, casualties and vehicle tables) for 2005 to 2014". Explanation of the variables are under Additional links, titled "Lookup up tables for variables".
  
  The data is mined to look for insights and answers to the following points:
  

@@ -1,0 +1,31 @@
+
+
+As a capstone project for my data mining class, my team took a datatset from kaggle and ran multiplt machine learning algoritms
+(Naives Bayes, KNN, Logistical Regression, Decision Tree, Random Forest, Boosting, and Neural Networks)
+
+
+Brief description (for more read report):
+
+Data Source: Credit Card Fraud dataset is available on Kaggle.com (https://www.kaggle.com/dalpozz/creditcardfraud).
+size: 150.MB
+n: 284,807
+K = 30
+
+
+Our Goal:
+
+partition the data set into 0.7 training set and 0.3 test set, train our machine learning models on the training set and 
+compare their performanc on the unseen test.
+
+Due to a improper balance of classification categories (only 3% of transactions flagged as fraud), we had to explore several 
+sampling methods to make the data more balance and improve the algorithms ability to be training of fraud classified transactions.
+the Sampling methods used were undersampling, oversampling, both sampling, Rose and SMOTE.
+
+Teamates:
+
+ - Ishan Chaturvedi
+ - Georges Colbert
+ - Shreyas Kupekar
+ - Akshat Maltare
+ - Charles Wilson
+

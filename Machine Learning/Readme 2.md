@@ -1,0 +1,1 @@
+This folder is composed of R scripts where I apply the tools and techniques behind machine learning and data mining that are central to business analytics, with particular emphasis on classification and prediction.

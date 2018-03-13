@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Food Recipe</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<!-- override class "img-circle" -->
+<style>
+	
+	.img-circle{
+		border:solid 4px black;
+		height:250px;
+		width:250px;
+	}
+</style>
+</head>
+
+<body>
+
+	<!-- http://www.w3schools.com/bootstrap/ -->
+	<div class="jumbotron text-center">
+	<h1> Welcome to Food Recipe Website </h1>
+    <p> Please select your food type </p>
+    </div>
+    
+    <ul class="nav nav-pills nav-justified"> 
+    <!-- nav-justified: 导航条会充斥整个行，从左到右填满 -->
+    	<li><a data-toggle="pill" href="Indian.html"> Indian </a></li>
+        <li class="active"><a data-toggle="pill" href="Chinese.html"> Chinese </a></li>
+        <li><a data-toggle="pill" href="Haitian.html"> Haitian </a></li>    
+    </ul>
+    <!-- one container, 左边右边各两个columns空着, 中间8个有内容 -->
+    <div class="container-fluid">
+    	
+        <div class="col-md-2">
+            
+        </div>
+        
+        <div class="col-md-8 text-center">
+        	<h1> Dongpo Pork </h1>
+            <img src="images/Dongpo Pork 2.jpg"/>
+            <table class="table table-striped">
+            	<tr>
+                	<th> Ingredients </th>
+                    <th> Amount </th>
+            	</tr>
+                <tr>
+                	<td> Pork belly </td>
+                    <td> 400g </td>
+            	</tr>
+                <tr>
+                	<td> Ginger </td>
+                    <td> One thumb sized </td>
+            	</tr>
+                <tr>
+                	<td> Anise </td>
+                    <td> 3 stars </td>
+            	</tr>
+                <tr>
+                	<td> Spring onion scallion </td>
+                    <td> 4 </td>
+            	</tr>
+                <tr>
+                	<td> Dark soy sauce </td>
+                    <td> 3 tablespoons </td>
+            	</tr>
+                <tr>
+                	<td> Light soy sauce </td>
+                    <td> 1 tablespoons </td>
+            	</tr>
+                <tr>
+                	<td> Chinese Shao Xin yellow wine </td>
+                    <td> 4 tablespoons </td>
+            	</tr>
+                <tr>
+                	<td> Vinegar </td>
+                    <td> 2 teaspoons </td>
+            	</tr>
+                <tr>
+                	<td> White sugar </td>
+                    <td> 8 teaspoons </td>
+            	</tr>
+                <tr>
+                	<td> Salt </td>
+                    <td> 1 teaspoons </td>
+            	</tr>
+                
+            </table>
+            <h2> Instructions </h2>
+            <ol class="text-left">
+            	<li> Boil some water in a wok, enough to just cover the pork. Put the meat in whole, and simmer for 20 minutes. As soon as the time is up, lift the pork out of the wok and immerse into ice cold water; this will stop the meat from cooking any further. Cut the pork into large chunks. </li>
+            	<li> Heat one tablespoon of oil in a large deep saucepan. When it is hot, add the spring onion, ginger and star anise. Stir fry for about 2 minutes on high heat (be careful that they do not burn). </li>
+                <li> Add the pork, and the rest of the ingredients for the sauce. Stir fry on high for 2 minutes, then turn down the heat to a simmer, and simmer for 40 minutes. </li>
+                <li> Serve the pork, and pour the sauce from the pan over it. Decorate with curls of spring onion. </li>
+            </ol>
+            
+        </div>
+        
+        <div class="col-md-2">
+            
+        </div>
+    	
+    </div>
+		
+</body>
+</html>

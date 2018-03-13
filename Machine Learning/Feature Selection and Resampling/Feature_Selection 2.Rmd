@@ -1,0 +1,371 @@
+---
+title: "Featurek4"
+author: "Georges Colbert"
+date: "10/24/2017"
+output: word_document
+---
+
+```{r }
+##### Problem 1
+
+library(readr)
+library(boot)
+set.seed(123457)
+ HW4Data <- read_csv("~/Desktop/Data Mining-758T/DATA/HW4Data.csv")
+ 
+HW4Data$X1 <- NULL
+
+colnames(HW4Data) <- c("Y.v","X.v") 
+
+plot(HW4Data$X.v, HW4Data$Y.v)
+
+```
+
+(a)	Create a scatterplot of X against Y. Comment on what you find.
+
+Looking at the plot, we notice that the relationship between X and Y is not linear. The X values between -10 and 3 seem to have a positive relations to Y, between 3 and 30 an increase in x has no effect on Y, and between 30 and 40 an increase in X leads to a positive increase in Y.
+
+```{r}
+#(b)	Set the seed, and then compute the LOOCV error
+
+HW4Data2 <- HW4Data$X.v**2
+HW4Data3 <- HW4Data$X.v**3
+HW4Data4 <- HW4Data$X.v**4
+
+HW4Data["X.sq"] <- HW4Data2
+
+HW4Data["X.cb"] <- HW4Data3
+
+HW4Data["X.qd"] <- HW4Data4
+
+
+fit1 <- glm(formula = Y.v~X.v, data = HW4Data, family ="gaussian")
+
+fit2 <- glm(formula = Y.v~X.v + X.sq , data = HW4Data, family ="gaussian")
+
+
+fit3 <- glm(formula = Y.v~X.v + X.sq + X.cb, data = HW4Data, family ="gaussian")
+
+fit4 <- glm(formula = Y.v~X.v + X.sq + X.cb + X.qd, data = HW4Data, family ="gaussian")
+
+
+
+library(boot)
+set.seed(123457)
+
+#LOOCV Error of 	Y = β0 + β1X 
+(cv.err <- cv.glm(HW4Data,fit1)$delta)
+
+#LOOCV Error of 	β0 + β1X + β2X2 
+(cv.err2 <- cv.glm(HW4Data,fit2)$delta)
+
+#LOOCV Error of β0 + β1X + β2X2 + β3X3   
+(cv.err3 <- cv.glm(HW4Data,fit3)$delta)
+
+#LOOCV Error of 	β0 + β1X + β2X2 + β3X3 + β4X4 
+(cv.err4 <- cv.glm(HW4Data,fit4)$delta)
+
+cv.err
+cv.err2
+cv.err3
+cv.err4
+```
+
+
+
+```{r }
+#(c)	Repeat (b) using another random seed, and report your results. Are your results the same as what you got in (b)? Why?
+library(boot)
+set.seed(123)
+(cv.err.1 <- cv.glm(HW4Data,fit1)$delta)
+(cv.err.2 <- cv.glm(HW4Data,fit2)$delta)
+(cv.err.3 <- cv.glm(HW4Data,fit3)$delta)
+(cv.err.4 <- cv.glm(HW4Data,fit4)$delta)
+
+cv.err.1
+cv.err.2
+cv.err.3
+cv.err.4
+
+```
+ Even after changing the seed, the results are the same. If I had to speculate, I assume the difference is beacause since only 1 data point is being predicted, changing seed is not enough to change the LOOCV erors.
+ 
+(d)	Which of the models in (b) had the smallest LOOCV error? 
+
+Based on LOOCV error, is seems the third model, (β0 + β1X + β2X2 + β3X3), has the smallest error.
+
+```{r }
+#(e)		Comment on the statistical significance of the coefficient estimates that results from fitting each of the models in (b) using least squares. Do these results agree with the conclusions drawn based on the cross-validation results?
+
+summary(fit1)
+summary(fit2)
+summary(fit3)
+summary(fit4)
+
+
+
+```
+
+By running the summary() fucntion, we look at the AIC score to compare. The results are close to the conlusion drawn form the cross validation results, but not exact. When comparing the AIC, it seems in this scenario that the fourth model, with a AIC of 1291.4, beats out the AIC of the third model, which is 1292.
+
+
+
+```{r }
+#Problem 2
+library(leaps)
+HW4Data.p2 <- HW4Data
+
+
+HW4Data.p2["X5"] <- HW4Data.p2$X.v**5
+HW4Data.p2["X6"] <- HW4Data.p2$X.v**6
+HW4Data.p2["X7"] <- HW4Data.p2$X.v**7
+HW4Data.p2["X8"] <- HW4Data.p2$X.v**8
+HW4Data.p2["X9"] <- HW4Data.p2$X.v**9
+HW4Data.p2["X10"] <- HW4Data.p2$X.v**10
+
+regfit.full <- regsubsets(Y.v~., data = HW4Data.p2, nvmax = 11)
+
+plot(regfit.full, scale = "adjr2")
+plot(regfit.full, scale = "bic")
+plot(regfit.full, scale = "Cp")
+
+
+
+```
+(a) What is the best model obtained according to Cp, BIC, and adjusted R2?
+
+According to the plots of Cp and the the Adjusted R squared, (BIC suggests a different model), the best model is Y~ Intercept + β1X + β2X^2 + β3X^3 +B10X^10 
+
+```{r}
+# report the coefficients of the best model obtained
+
+regfit.best <- regsubsets( Y.v~., data = HW4Data.p2, nvmax = 11)
+coef(regfit.best,4)
+
+
+
+```
+
+
+(b)	Repeat (a), using forward stepwise selection and also using backwards stepwise selection. How does your answer compare to the results in (a)?
+
+
+```{r}
+# Forward
+regfit.fwd <- regsubsets(Y.v~., data = HW4Data.p2, nvmax = 11, method = "forward")
+
+
+plot(regfit.fwd, scale = "adjr2")
+plot(regfit.fwd, scale = "bic")
+plot(regfit.fwd, scale = "Cp")
+
+coef(regfit.fwd,4)
+
+
+
+```
+
+
+```{r}
+
+# Backward
+regfit.bwd <- regsubsets(Y.v~., data = HW4Data.p2, nvmax = 11, method = "backward")
+
+plot(regfit.bwd, scale = "adjr2")
+plot(regfit.bwd, scale = "bic")
+plot(regfit.bwd, scale = "Cp")
+
+coef(regfit.bwd,4)
+
+
+
+```
+
+The models given for forward stepwise selection and backward stepwise selection is the same as the model given in the best subset selection.
+
+```{r}
+
+##### Lasso
+
+library(glmnet)
+set.seed(123457)
+x= model.matrix(Y.v~., data = HW4Data.p2)
+
+y=HW4Data.p2$Y.v
+
+grid= 10^seq(10,-2, length = 100)
+
+
+
+train <- sample(1:nrow(x),nrow(x)/2)
+
+
+test <- (-train)
+y.test <- y[test]
+
+lasso.mod= glmnet(x[train,],y[train],alpha = 1, lambda = grid)
+
+plot(lasso.mod)
+# As Lambda decreases, the standardized coefficients shrink towards zero.
+
+cv.out <- cv.glmnet(x[train,],y[train],alpha = 1)
+
+plot(cv.out)
+
+bestlam <- cv.out$lambda.min
+lasso.pred <- predict(lasso.mod, s= bestlam, newx = x[test,])
+
+mean((lasso.pred-y.test)^2)
+
+
+out=glmnet(x,y, alpha=1, lambda=grid)
+
+lasso.coef=predict(out, type="coefficients",s=bestlam)[1:11,]
+
+lasso.coef[lasso.coef!=0]
+
+
+````
+With the Lasso, I notice that it has 5 predictors, while the previous methods had suggested four predictors as the best model. Additionally, I notice that lasso uses X^4 and X^5, while the other methods did not use X^4 and used X^10.
+
+
+```{r}
+
+#### Problem 4
+##(a)	Using the best model in 1 score the test data
+
+HW4DataTest <- read_csv("~/Desktop/Data Mining-758T/DATA/HW4DataTest.csv")
+
+colnames(HW4DataTest) <- c("Prince","Y.v","X.v") 
+
+HW4Data$Prince <- NULL
+
+HW4DataTest["X.sq"] <- HW4DataTest$X.v**2
+
+HW4DataTest["X.cb"] <- HW4DataTest$X.v**3
+
+HW4DataTest["X.qd"] <- HW4DataTest$X.v**4
+
+
+predicted <- predict(fit3, newdata = HW4DataTest)
+
+actual <- HW4DataTest$Y.v
+
+
+RMSE <- sqrt(mean((actual-predicted)^2))
+
+RMSE
+
+#(b)	Compare the best subsets model (in 2(a)) and the lasso model (in 2(c)) with 3(a) in terms of their #performance on the test data. 
+
+####(b)
+# best subsets model (in 2(a))
+
+
+HW4DataTest["X5"] <- HW4DataTest$X.v**5
+HW4DataTest["X6"] <- HW4DataTest$X.v**6
+HW4DataTest["X7"] <- HW4DataTest$X.v**7
+HW4DataTest["X8"] <- HW4DataTest$X.v**8
+HW4DataTest["X9"] <- HW4DataTest$X.v**9
+HW4DataTest["X10"] <- HW4DataTest$X.v**10
+
+regfit.best <- regsubsets( Y.v~., data = HW4Data.p2, nvmax = 11)
+coef(regfit.best,4)
+
+test.mat = model.matrix(Y.v~., data = HW4DataTest)
+
+val.errors= rep(NA, 10)
+
+for (i in 1:10){
+  coefi =coef(regfit.best, i)
+  pred = test.mat[,names(coefi)]%x%coefi
+  val.errors[i]= mean ((HW4DataTest$Y.v-pred)^2)
+}
+
+val.errors
+
+which.min(val.errors)
+
+
+coef(regfit.best, 3)
+
+regfit.best <- regsubsets( Y.v~., data = HW4DataTest, nvmax = 11)
+
+coef(regfit.best, 3)
+
+k=3
+
+
+set.seed(123457)
+
+
+folds= sample(1:k, nrow(HW4DataTest), replace = TRUE)
+
+cv.errors= matrix(NA, k, 10, dimnames=list(NULL, paste(1:10)))
+
+
+predict.regsubsets =function (object ,newdata ,id ,...){
+   form=as.formula(object$call [[2]])
+   mat=model.matrix(form,newdata)
+   coefi=coef(object ,id=id)
+   xvars=names(coefi)
+   mat[,xvars]%*%coefi }
+
+for (j in 1:k) {
+  best.fit = regsubsets(Y.v~., data = HW4DataTest[folds!=j,],
+                  nvmax=10)
+  for(i in 1:10){
+    pred = predict(best.fit,HW4DataTest[folds ==j,], id = i)
+    cv.errors[j,i] = mean ((HW4DataTest$Y.v[folds == j]- pred)^2)
+
+    }
+    
+  }
+  
+ mean.cv.errors = apply(cv.errors,2,mean)
+ 
+mean.cv.errors
+
+
+par(mfrow=c(1,1))
+
+plot(mean.cv.errors, type='b')
+
+
+#####
+# the lasso model (in 2(c)) 
+lasso.mod= glmnet(x[train,],y[train],alpha = 1, lambda = grid)
+
+set.seed (123457)
+cv.out=cv.glmnet(x[train ,],y[train],alpha=1)
+
+bestlam=cv.out$lambda.min
+lasso.pred=predict(lasso.mod,s=bestlam ,newx=x[test,])
+
+RMSE.1 <- sqrt(mean((actual-predicted)^2))
+RMSE.lasso <- sqrt(mean((lasso.pred-y.test)^2))
+RMSE.bestsubset <- sqrt(mean.cv.errors[3])
+
+RMSE.1
+RMSE.lasso
+RMSE.bestsubset
+
+
+
+
+
+````
+
+By comparing the RMSE between the lasso model, best subset model, and best model in 1, when fitted to the test data, it appears that the  best subset model has the lowest RMSE. It suggest that the the best subset model may be the model that most closely  captures the true relationship between X and Y. 
+
+
+
+
+
+
+
+
+
+
+
+

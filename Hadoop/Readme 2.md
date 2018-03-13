@@ -1,0 +1,1 @@
+This folder is derived from my academic assignments on the software pakages that make up the Hadoop ecosystem. I used Pig, Hive, Sqoop and Spark to handle Big Data stored on a hadoop distributed file system. 
